@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, TextInput } from "react-native";
 import React, { useState } from "react";
 
 export default function Input() {
@@ -11,7 +11,6 @@ export default function Input() {
         onChangeText={(newText) => setText(newText)}
         placeholder="Enter something here..."
       />
-      <Text>Input</Text>
     </View>
   );
 }

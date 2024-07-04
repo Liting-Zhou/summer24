@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import Header from "./components/Header";
-import React, { useState } from "react";
+import Input from "./components/Input";
 
 export default function App() {
   const appName = "Summer 2024 class";
@@ -12,6 +12,8 @@ export default function App() {
         <Text>children1</Text>
         <Text>children2</Text>
       </Header>
+      <Input />
+      {/* <Text>The message you entered: {text}</Text> */}
       <StatusBar style="auto" />
     </View>
   );
