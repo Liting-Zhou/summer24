@@ -3,11 +3,14 @@ import { StyleSheet, Text, View } from "react-native";
 import Header from "./components/Header";
 
 export default function App() {
-  const appName = "My App";
+  const appName = "Summer 2024 class";
 
   return (
     <View style={styles.container}>
-      <Header name={appName} />
+      <Header name={appName}>
+        <Text>children1</Text>
+        <Text>children2</Text>
+      </Header>
       <StatusBar style="auto" />
     </View>
   );
