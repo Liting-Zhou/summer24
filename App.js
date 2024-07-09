@@ -20,6 +20,10 @@ export default function App() {
     setModalVisible(false);
   };
 
+  const handleCancelInput = () => {
+    setModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -36,10 +40,16 @@ export default function App() {
           />
         </View>
       </View>
-      <Input inputHandler={handleInputData} isModalVisible={modalVisible} />
+      <Input
+        inputHandler={handleInputData}
+        isModalVisible={modalVisible}
+        cancelHandler={handleCancelInput}
+      />
       <View style={styles.bottomContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.textStyle}>{receivedText}</Text>
+          {receivedText !== "" && (
+            <Text style={styles.textStyle}>{receivedText}</Text>
+          )}
         </View>
       </View>
       <StatusBar style="auto" />

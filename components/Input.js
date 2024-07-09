@@ -1,12 +1,18 @@
 import { View, Text, TextInput, Button, StyleSheet, Modal } from "react-native";
 import React, { useState } from "react";
 
-export default function Input({ inputHandler, isModalVisible }) {
+export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
   const [text, setText] = useState("");
   const [isBlurred, setIsBlurred] = useState(false);
 
   const handleConfirm = () => {
     inputHandler(text);
+    setText("");
+  };
+
+  const handleCancel = () => {
+    cancelHandler();
+    setText("");
   };
 
   return (
@@ -25,6 +31,7 @@ export default function Input({ inputHandler, isModalVisible }) {
           {isBlurred && <Text>Thank you</Text>}
           <View style={styles.buttonStyle}>
             <Button title="Confirm" onPress={handleConfirm} />
+            <Button title="Cancel" onPress={handleCancel} />
           </View>
         </View>
       </View>
@@ -35,19 +42,18 @@ export default function Input({ inputHandler, isModalVisible }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
   popUpContainer: {
     backgroundColor: "gainsboro",
-    padding: 10,
+    padding: 20,
     borderRadius: 10,
     width: "60%",
     alignItems: "center",
   },
   textInputStyle: {
-    width: "90%",
+    width: "100%",
     borderColor: "purple",
     borderWidth: 1,
     padding: 10,
@@ -56,7 +62,6 @@ const styles = StyleSheet.create({
     color: "purple",
   },
   buttonStyle: {
-    // width: "30%",
-    marginTop: 10,
+    flexDirection: "row",
   },
 });
