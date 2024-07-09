@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import React, { useState } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
@@ -7,10 +7,10 @@ import Input from "./components/Input";
 export default function App() {
   const appName = "Summer 2024 class";
   const [receivedText, setReceivedText] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
   const handleInputData = (data) => {
-    // console.log("call back function");
-    // console.log(data);
     setReceivedText(data);
+    setModalVisible(false);
   };
 
   return (
@@ -19,9 +19,15 @@ export default function App() {
         {/* <Text>children1</Text> */}
         {/* <Text>children2</Text> */}
       </Header>
-      <Input inputHandler={handleInputData} />
-      <Text>The message you entered: {receivedText}</Text>
+      <Input inputHandler={handleInputData} isModalVisible={modalVisible} />
+      <Text>{receivedText}</Text>
       <StatusBar style="auto" />
+      <Button
+        title="Add a goal"
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      />
     </View>
   );
 }
