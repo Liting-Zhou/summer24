@@ -1,9 +1,13 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 import React, { useState } from "react";
 
 export default function Input() {
   const [text, setText] = useState("");
   const [isBlurred, setIsBlurred] = useState(false);
+
+  const handleConfirm = () => {
+    console.log(text);
+  };
 
   return (
     <View>
@@ -16,6 +20,7 @@ export default function Input() {
         onFocus={() => setIsBlurred(false)}
       />
       {isBlurred && <Text>Thank you</Text>}
+      <Button title="Confirm" onPress={handleConfirm} />
     </View>
   );
 }
