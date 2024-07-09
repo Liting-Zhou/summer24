@@ -20,14 +20,16 @@ export default function App() {
         {/* <Text>children2</Text> */}
       </Header>
       <Input inputHandler={handleInputData} isModalVisible={modalVisible} />
-      <Text>{receivedText}</Text>
+      <Text style={styles.textStyle}>{receivedText}</Text>
       <StatusBar style="auto" />
-      <Button
-        title="Add a goal"
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      />
+      <View style={styles.buttonStyle}>
+        <Button
+          title="Add a goal"
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -38,5 +40,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  textStyle: {
+    color: "red",
+  },
+  buttonStyle: {
+    width: "30%",
+    marginTop: 10,
   },
 });
