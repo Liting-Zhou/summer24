@@ -1,21 +1,43 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Modal } from "react-native";
 import React, { useState } from "react";
 
-export default function Input() {
+export default function Input({ inputHandler, isModalVisible }) {
   const [text, setText] = useState("");
   const [isBlurred, setIsBlurred] = useState(false);
 
+  const handleConfirm = () => {
+    inputHandler(text);
+  };
+
   return (
-    <View>
-      <TextInput
-        value={text}
-        onChangeText={(newText) => setText(newText)}
-        placeholder="Enter something here..."
-        autoFocus={true} // focus when the Input component renders
-        onBlur={() => setIsBlurred(true)}
-        onFocus={() => setIsBlurred(false)}
-      />
-      {isBlurred && <Text>Thank you</Text>}
-    </View>
+    <Modal animationType="slide" visible={isModalVisible}>
+      <View style={styles.container}>
+        <TextInput
+          value={text}
+          onChangeText={(newText) => setText(newText)}
+          placeholder="Enter something here..."
+          autoFocus={true} // focus when the Input component renders
+          onBlur={() => setIsBlurred(true)}
+          onFocus={() => setIsBlurred(false)}
+        />
+        {isBlurred && <Text>Thank you</Text>}
+        <View style={styles.buttonStyle}>
+          <Button title="Confirm" onPress={handleConfirm} />
+        </View>
+      </View>
+    </Modal>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonStyle: {
+    width: "30%",
+    marginTop: 10,
+  },
+});
