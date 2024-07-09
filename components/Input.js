@@ -30,7 +30,11 @@ export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
           />
           {isBlurred && <Text>Thank you</Text>}
           <View style={styles.buttonStyle}>
-            <Button title="Confirm" onPress={handleConfirm} />
+            <Button
+              title="Confirm"
+              onPress={handleConfirm}
+              disabled={text === ""}
+            />
             <Button title="Cancel" onPress={handleCancel} />
           </View>
         </View>
