@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from "react-native";
 export default function Header(props) {
   // console.log("Header 5:" props);
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={styles.textStyle}>Welcome to {props.name}</Text>
       {props.children}
     </View>
@@ -12,11 +12,11 @@ export default function Header(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    borderColor: "purple",
-  },
   textStyle: {
     color: "purple",
-    padding: 20,
+    padding: 10,
+    borderColor: "purple",
+    borderWidth: 1,
+    borderRadius: 5,
   },
 });

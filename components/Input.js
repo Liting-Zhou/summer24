@@ -10,19 +10,22 @@ export default function Input({ inputHandler, isModalVisible }) {
   };
 
   return (
-    <Modal animationType="slide" visible={isModalVisible}>
+    <Modal animationType="slide" visible={isModalVisible} transparent={true}>
       <View style={styles.container}>
-        <TextInput
-          value={text}
-          onChangeText={(newText) => setText(newText)}
-          placeholder="Enter something here..."
-          autoFocus={true} // focus when the Input component renders
-          onBlur={() => setIsBlurred(true)}
-          onFocus={() => setIsBlurred(false)}
-        />
-        {isBlurred && <Text>Thank you</Text>}
-        <View style={styles.buttonStyle}>
-          <Button title="Confirm" onPress={handleConfirm} />
+        <View style={styles.popUpContainer}>
+          <TextInput
+            value={text}
+            onChangeText={(newText) => setText(newText)}
+            placeholder="Enter something here..."
+            autoFocus={true} // focus when the Input component renders
+            onBlur={() => setIsBlurred(true)}
+            onFocus={() => setIsBlurred(false)}
+            style={styles.textInputStyle}
+          />
+          {isBlurred && <Text>Thank you</Text>}
+          <View style={styles.buttonStyle}>
+            <Button title="Confirm" onPress={handleConfirm} />
+          </View>
         </View>
       </View>
     </Modal>
@@ -32,12 +35,28 @@ export default function Input({ inputHandler, isModalVisible }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
+  popUpContainer: {
+    backgroundColor: "gainsboro",
+    padding: 10,
+    borderRadius: 10,
+    width: "60%",
+    alignItems: "center",
+  },
+  textInputStyle: {
+    width: "90%",
+    borderColor: "purple",
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    color: "purple",
+  },
   buttonStyle: {
-    width: "30%",
+    // width: "30%",
     marginTop: 10,
   },
 });

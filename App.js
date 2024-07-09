@@ -38,7 +38,9 @@ export default function App() {
       </View>
       <Input inputHandler={handleInputData} isModalVisible={modalVisible} />
       <View style={styles.bottomContainer}>
-        <Text style={styles.textStyle}>{receivedText}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.textStyle}>{receivedText}</Text>
+        </View>
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -49,15 +51,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    justifyContent: "center",
+  },
+  textContainer: {
+    backgroundColor: "lightyellow",
+    borderRadius: 5,
   },
   textStyle: {
     color: "red",
+    // backgroundColor: "lightyellow",
+    padding: 10,
   },
   buttonStyle: {
     width: "30%",
-    // marginTop: 5,
+    marginTop: 10,
   },
   topContainer: {
     flex: 1,
@@ -68,5 +74,6 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: "lightblue",
     alignItems: "center",
+    padding: 20,
   },
 });
