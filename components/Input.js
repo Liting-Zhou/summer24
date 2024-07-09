@@ -1,12 +1,12 @@
 import { View, Text, TextInput, Button } from "react-native";
 import React, { useState } from "react";
 
-export default function Input() {
+export default function Input({ inputHandler }) {
   const [text, setText] = useState("");
   const [isBlurred, setIsBlurred] = useState(false);
 
   const handleConfirm = () => {
-    console.log(text);
+    inputHandler(text);
   };
 
   return (

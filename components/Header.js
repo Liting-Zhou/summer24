@@ -2,7 +2,7 @@
 import { Text, View } from "react-native";
 
 export default function Header(props) {
-  console.log(props);
+  // console.log("Header 5:" props);
   return (
     <View>
       <Text>Welcome to {props.name}</Text>
