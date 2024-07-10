@@ -1,4 +1,12 @@
-import { View, Text, TextInput, Button, StyleSheet, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Modal,
+  Image,
+} from "react-native";
 import React, { useState } from "react";
 
 export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
@@ -19,6 +27,18 @@ export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
     <Modal animationType="slide" visible={isModalVisible} transparent={true}>
       <View style={styles.container}>
         <View style={styles.popUpContainer}>
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
+            }}
+            style={styles.imageStyle}
+            alt="network image"
+          />
+          <Image
+            source={require("../assets/input.png")}
+            style={styles.imageStyle}
+            alt="local image"
+          />
           <TextInput
             value={text}
             onChangeText={(newText) => setText(newText)}
@@ -30,12 +50,12 @@ export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
           />
           {isBlurred && <Text>Thank you</Text>}
           <View style={styles.buttonStyle}>
+            <Button title="Cancel" onPress={handleCancel} />
             <Button
               title="Confirm"
               onPress={handleConfirm}
               disabled={text === ""}
             />
-            <Button title="Cancel" onPress={handleCancel} />
           </View>
         </View>
       </View>
@@ -62,10 +82,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     marginBottom: 10,
+    marginTop: 20,
     borderRadius: 5,
     color: "purple",
   },
   buttonStyle: {
     flexDirection: "row",
+  },
+  imageStyle: {
+    width: 100,
+    height: 100,
+    // margin: 10,
   },
 });
