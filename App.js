@@ -7,6 +7,8 @@ import {
   View,
   Button,
   SafeAreaView,
+  ScrollView,
+  FlatList,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "./components/Header";
@@ -15,7 +17,22 @@ import Input from "./components/Input";
 export default function App() {
   const appName = "Summer 2024 class";
   // const [receivedText, setReceivedText] = useState("");
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState([
+    { text: "Finish the course", id: Math.random() },
+    { text: "Finish the course", id: Math.random() },
+    { text: "Finish the course", id: Math.random() },
+    { text: "Finish the course", id: Math.random() },
+    { text: "Learn React Native", id: Math.random() },
+    { text: "Learn React Native", id: Math.random() },
+    { text: "Learn React Native", id: Math.random() },
+    { text: "Learn React Native", id: Math.random() },
+    { text: "Build a project", id: Math.random() },
+    { text: "Build a project", id: Math.random() },
+    { text: "Build a project", id: Math.random() },
+    { text: "Build a project", id: Math.random() },
+    { text: "Get a job", id: Math.random() },
+    { text: "Get a job", id: Math.random() },
+  ]);
   const [modalVisible, setModalVisible] = useState(false);
   const handleInputData = (data) => {
     //define a new object {text:.., id:..}
@@ -54,16 +71,23 @@ export default function App() {
         cancelHandler={handleCancelInput}
       />
       <View style={styles.bottomContainer}>
-        {/* {receivedText !== "" && (
-            <Text style={styles.textStyle}>{receivedText}</Text>
-          )} */}
-        {goals.map((goal) => {
-          return (
-            <View key={goal.id} style={styles.textContainer}>
-              <Text style={styles.textStyle}>{goal.text}</Text>
-            </View>
-          );
-        })}
+        {goals.length === 0 ? (
+          <View style={styles.textContainer}>
+            <Text style={styles.textStyle}>Please add a goal</Text>
+          </View>
+        ) : (
+          <FlatList
+            contentContainerStyle={styles.listContainer}
+            data={goals}
+            renderItem={(itemData) => {
+              return (
+                <View style={styles.textContainer}>
+                  <Text style={styles.textStyle}>{itemData.item.text}</Text>
+                </View>
+              );
+            }}
+          />
+        )}
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -75,9 +99,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  listContainer: {
+    alignItems: "center",
+  },
   textContainer: {
     backgroundColor: "lightyellow",
     borderRadius: 5,
+    marginVertical: 5,
   },
   textStyle: {
     color: "red",
@@ -95,8 +123,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 4,
     backgroundColor: "lightblue",
-    alignItems: "center",
+    // alignItems: "center",
     padding: 20,
-    gap: 10,
   },
 });
