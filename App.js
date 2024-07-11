@@ -3,7 +3,6 @@ import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
-  TextInput,
   View,
   Button,
   SafeAreaView,
@@ -13,10 +12,10 @@ import {
 import React, { useState } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const appName = "Summer 2024 class";
-  // const [receivedText, setReceivedText] = useState("");
   const [goals, setGoals] = useState([
     { text: "Finish the course", id: Math.random() },
     { text: "Finish the course", id: Math.random() },
@@ -79,12 +78,8 @@ export default function App() {
           <FlatList
             contentContainerStyle={styles.listContainer}
             data={goals}
-            renderItem={(itemData) => {
-              return (
-                <View style={styles.textContainer}>
-                  <Text style={styles.textStyle}>{itemData.item.text}</Text>
-                </View>
-              );
+            renderItem={({ item }) => {
+              return <GoalItem goal={item} />;
             }}
           />
         )}
