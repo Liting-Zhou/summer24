@@ -16,21 +16,21 @@ import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const appName = "Summer 2024 class";
+  // default goals for testing
   const [goals, setGoals] = useState([
-    { text: "Finish the course", id: Math.random() },
-    { text: "Finish the course", id: Math.random() },
-    { text: "Finish the course", id: Math.random() },
-    { text: "Finish the course", id: Math.random() },
-    { text: "Learn React Native", id: Math.random() },
-    { text: "Learn React Native", id: Math.random() },
-    { text: "Learn React Native", id: Math.random() },
-    { text: "Learn React Native", id: Math.random() },
-    { text: "Build a project", id: Math.random() },
-    { text: "Build a project", id: Math.random() },
-    { text: "Build a project", id: Math.random() },
-    { text: "Build a project", id: Math.random() },
-    { text: "Get a job", id: Math.random() },
-    { text: "Get a job", id: Math.random() },
+    { text: "Finish the course 1", id: Math.random() },
+    { text: "Finish the course 2", id: Math.random() },
+    { text: "Finish the course 3", id: Math.random() },
+    { text: "Finish the course 4", id: Math.random() },
+    { text: "Learn React Native 1", id: Math.random() },
+    { text: "Learn React Native 2", id: Math.random() },
+    { text: "Learn React Native 3", id: Math.random() },
+    { text: "Build a project 1", id: Math.random() },
+    { text: "Build a project 2", id: Math.random() },
+    { text: "Build a project 3", id: Math.random() },
+    { text: "Build a project 4", id: Math.random() },
+    { text: "Get a job 1", id: Math.random() },
+    { text: "Get a job 2", id: Math.random() },
   ]);
   const [modalVisible, setModalVisible] = useState(false);
   const handleInputData = (data) => {
@@ -46,6 +46,12 @@ export default function App() {
 
   const handleCancelInput = () => {
     setModalVisible(false);
+  };
+
+  const handleDeleteGoal = (deletedId) => {
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== deletedId);
+    });
   };
 
   return (
@@ -79,7 +85,7 @@ export default function App() {
             contentContainerStyle={styles.listContainer}
             data={goals}
             renderItem={({ item }) => {
-              return <GoalItem goal={item} />;
+              return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
             }}
           />
         )}
@@ -118,7 +124,6 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 4,
     backgroundColor: "lightblue",
-    // alignItems: "center",
     padding: 20,
   },
 });
