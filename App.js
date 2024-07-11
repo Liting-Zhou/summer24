@@ -1,3 +1,4 @@
+// rnf to generate a template
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -13,10 +14,17 @@ import Input from "./components/Input";
 
 export default function App() {
   const appName = "Summer 2024 class";
-  const [receivedText, setReceivedText] = useState("");
+  // const [receivedText, setReceivedText] = useState("");
+  const [goals, setGoals] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const handleInputData = (data) => {
-    setReceivedText(data);
+    //define a new object {text:.., id:..}
+    const newGoal = { text: data, id: Math.random() };
+    // use updater function to update the state
+    setGoals((currentGoals) => {
+      return [...currentGoals, newGoal];
+    });
+    // setReceivedText(data);
     setModalVisible(false);
   };
 
@@ -46,11 +54,16 @@ export default function App() {
         cancelHandler={handleCancelInput}
       />
       <View style={styles.bottomContainer}>
-        <View style={styles.textContainer}>
-          {receivedText !== "" && (
+        {/* {receivedText !== "" && (
             <Text style={styles.textStyle}>{receivedText}</Text>
-          )}
-        </View>
+          )} */}
+        {goals.map((goal) => {
+          return (
+            <View key={goal.id} style={styles.textContainer}>
+              <Text style={styles.textStyle}>{goal.text}</Text>
+            </View>
+          );
+        })}
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -68,7 +81,6 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "red",
-    // backgroundColor: "lightyellow",
     padding: 10,
   },
   buttonStyle: {
@@ -85,5 +97,6 @@ const styles = StyleSheet.create({
     backgroundColor: "lightblue",
     alignItems: "center",
     padding: 20,
+    gap: 10,
   },
 });
