@@ -1,27 +1,57 @@
+// rnf to generate a template
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
-  TextInput,
   View,
   Button,
   SafeAreaView,
+  ScrollView,
+  FlatList,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const appName = "Summer 2024 class";
-  const [receivedText, setReceivedText] = useState("");
+  // default goals for testing
+  const [goals, setGoals] = useState([
+    { text: "Finish the course 1", id: Math.random() },
+    { text: "Finish the course 2", id: Math.random() },
+    { text: "Finish the course 3", id: Math.random() },
+    { text: "Finish the course 4", id: Math.random() },
+    { text: "Learn React Native 1", id: Math.random() },
+    { text: "Learn React Native 2", id: Math.random() },
+    { text: "Learn React Native 3", id: Math.random() },
+    { text: "Build a project 1", id: Math.random() },
+    { text: "Build a project 2", id: Math.random() },
+    { text: "Build a project 3", id: Math.random() },
+    { text: "Build a project 4", id: Math.random() },
+    { text: "Get a job 1", id: Math.random() },
+    { text: "Get a job 2", id: Math.random() },
+  ]);
   const [modalVisible, setModalVisible] = useState(false);
   const handleInputData = (data) => {
-    setReceivedText(data);
+    //define a new object {text:.., id:..}
+    const newGoal = { text: data, id: Math.random() };
+    // use updater function to update the state
+    setGoals((currentGoals) => {
+      return [...currentGoals, newGoal];
+    });
+    // setReceivedText(data);
     setModalVisible(false);
   };
 
   const handleCancelInput = () => {
     setModalVisible(false);
+  };
+
+  const handleDeleteGoal = (deletedId) => {
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== deletedId);
+    });
   };
 
   return (
@@ -46,11 +76,19 @@ export default function App() {
         cancelHandler={handleCancelInput}
       />
       <View style={styles.bottomContainer}>
-        <View style={styles.textContainer}>
-          {receivedText !== "" && (
-            <Text style={styles.textStyle}>{receivedText}</Text>
-          )}
-        </View>
+        {goals.length === 0 ? (
+          <View style={styles.textContainer}>
+            <Text style={styles.textStyle}>Please add a goal</Text>
+          </View>
+        ) : (
+          <FlatList
+            contentContainerStyle={styles.listContainer}
+            data={goals}
+            renderItem={({ item }) => {
+              return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
+            }}
+          />
+        )}
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -62,13 +100,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  listContainer: {
+    alignItems: "center",
+  },
   textContainer: {
     backgroundColor: "lightyellow",
     borderRadius: 5,
+    marginVertical: 5,
   },
   textStyle: {
     color: "red",
-    // backgroundColor: "lightyellow",
     padding: 10,
   },
   buttonStyle: {
@@ -83,7 +124,6 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 4,
     backgroundColor: "lightblue",
-    alignItems: "center",
     padding: 20,
   },
 });

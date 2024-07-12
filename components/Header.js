@@ -1,8 +1,6 @@
-// rnf to generate a template
 import { Text, View, StyleSheet } from "react-native";
 
 export default function Header(props) {
-  // console.log("Header 5:" props);
   return (
     <View>
       <Text style={styles.textStyle}>Welcome to {props.name}</Text>
