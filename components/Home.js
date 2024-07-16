@@ -53,8 +53,9 @@ export default function Home({ navigation }) {
     });
   };
 
-  const handlePressGoal = () => {
-    navigation.navigate("Details");
+  const handlePressGoal = (pressedGoal) => {
+    // console.log("pressedGoal", pressedGoal);
+    navigation.navigate("Details", { goalObj: pressedGoal });
   };
 
   return (

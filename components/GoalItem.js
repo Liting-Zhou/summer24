@@ -3,7 +3,7 @@ import React from "react";
 
 export default function GoalItem({ goal, deleteHandler, pressHandler }) {
   const goalPressed = () => {
-    pressHandler();
+    pressHandler(goal);
   };
   return (
     <View style={styles.textContainer}>
