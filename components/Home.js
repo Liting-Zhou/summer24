@@ -39,7 +39,6 @@ export default function Home({ navigation }) {
     setGoals((currentGoals) => {
       return [...currentGoals, newGoal];
     });
-    // setReceivedText(data);
     setModalVisible(false);
   };
 
@@ -53,18 +52,10 @@ export default function Home({ navigation }) {
     });
   };
 
-  const handlePressGoal = (pressedGoal) => {
-    // console.log("pressedGoal", pressedGoal);
-    navigation.navigate("Details", { goalObj: pressedGoal });
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
-        <Header name={appName}>
-          {/* <Text>children1</Text> */}
-          {/* <Text>children2</Text> */}
-        </Header>
+        <Header name={appName}></Header>
         <View style={styles.buttonStyle}>
           <Button
             title="Add a goal"
@@ -89,13 +80,7 @@ export default function Home({ navigation }) {
             contentContainerStyle={styles.listContainer}
             data={goals}
             renderItem={({ item }) => {
-              return (
-                <GoalItem
-                  goal={item}
-                  deleteHandler={handleDeleteGoal}
-                  pressHandler={handlePressGoal}
-                />
-              );
+              return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
             }}
           />
         )}
