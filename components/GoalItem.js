@@ -1,7 +1,10 @@
 import { StyleSheet, Text, View, Button } from "react-native";
 import React from "react";
 
-export default function GoalItem({ goal, deleteHandler }) {
+export default function GoalItem({ goal, deleteHandler, pressHandler }) {
+  const goalPressed = () => {
+    pressHandler();
+  };
   return (
     <View style={styles.textContainer}>
       <Text style={styles.textStyle}>{goal.text}</Text>
@@ -11,6 +14,7 @@ export default function GoalItem({ goal, deleteHandler }) {
           deleteHandler(goal.id);
         }}
       ></Button>
+      <Button title="i" onPress={goalPressed}></Button>
     </View>
   );
 }

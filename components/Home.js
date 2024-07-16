@@ -13,7 +13,7 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
   // default goals for testing
   const [goals, setGoals] = useState([
@@ -53,6 +53,10 @@ export default function Home() {
     });
   };
 
+  const handlePressGoal = () => {
+    navigation.navigate("Details");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -84,7 +88,13 @@ export default function Home() {
             contentContainerStyle={styles.listContainer}
             data={goals}
             renderItem={({ item }) => {
-              return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
+              return (
+                <GoalItem
+                  goal={item}
+                  deleteHandler={handleDeleteGoal}
+                  pressHandler={handlePressGoal}
+                />
+              );
             }}
           />
         )}
