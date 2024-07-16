@@ -1,6 +1,6 @@
 // rnfs to generate a template
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, Button } from "react-native";
 import React, { useState } from "react";
 import Home from "./components/Home";
 import GoalDetails from "./components/GoalDetails";
@@ -26,7 +26,15 @@ export default function App() {
           name="Details"
           component={GoalDetails}
           options={({ route }) => {
-            return { title: route.params.goalObj.text };
+            return {
+              title: route.params.goalObj.text,
+              headerRight: () => (
+                <Button
+                  title="Warning"
+                  onPress={() => console.log("Warning!")}
+                ></Button>
+              ),
+            };
           }}
         />
       </Stack.Navigator>
