@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import React from "react";
 
 export default function GoalDetails({ navigation, route }) {
-  console.log("route", route);
+  //   console.log("route", route);
   return (
     <View>
       {route.params ? (

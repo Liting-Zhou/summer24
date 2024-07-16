@@ -22,7 +22,13 @@ export default function App() {
             headerStyle: { backgroundColor: "tomato" },
           }}
         />
-        <Stack.Screen name="Details" component={GoalDetails} />
+        <Stack.Screen
+          name="Details"
+          component={GoalDetails}
+          options={({ route }) => {
+            return { title: route.params.goalObj.text };
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
