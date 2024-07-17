@@ -30,21 +30,7 @@ export default function App() {
             title: "Goals",
           }}
         />
-        <Stack.Screen
-          name="Details"
-          component={GoalDetails}
-          options={({ route }) => {
-            return {
-              title: route.params.goalObj.text,
-              headerRight: () => (
-                <Button
-                  title="Warning"
-                  onPress={() => console.log("Warning!")}
-                ></Button>
-              ),
-            };
-          }}
-        />
+        <Stack.Screen name="Details" component={GoalDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
