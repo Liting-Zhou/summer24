@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from "./PressableButton";
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
@@ -56,14 +57,21 @@ export default function Home({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
         <Header name={appName}></Header>
-        <View style={styles.buttonStyle}>
-          <Button
+        {/* <View style={styles.buttonStyle}> */}
+        {/* <Button
             title="Add a goal"
             onPress={() => {
               setModalVisible(true);
             }}
-          />
-        </View>
+          /> */}
+        <PressableButton
+          pressedFunction={() => {
+            setModalVisible(true);
+          }}
+        >
+          <Text style={styles.buttonTextStyle}>Add a goal</Text>
+        </PressableButton>
+        {/* </View> */}
       </View>
       <Input
         inputHandler={handleInputData}
@@ -107,14 +115,18 @@ const styles = StyleSheet.create({
     color: "red",
     padding: 10,
   },
-  buttonStyle: {
-    width: "30%",
-    marginTop: 10,
+  // buttonStyle: {
+  //   width: "30%",
+  //   marginTop: 10,
+  // },
+  buttonTextStyle: {
+    color: "blue",
+    fontSize: 16,
   },
   topContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
   bottomContainer: {
     flex: 4,

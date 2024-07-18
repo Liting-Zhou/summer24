@@ -16,5 +16,6 @@ const styles = StyleSheet.create({
     borderColor: "purple",
     borderWidth: 1,
     borderRadius: 5,
+    marginTop: 10,
   },
 });
