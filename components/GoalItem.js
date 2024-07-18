@@ -12,7 +12,10 @@ export default function GoalItem({ goal, deleteHandler }) {
     <View style={styles.textContainer}>
       <Pressable
         onPress={handlePressGoal}
-        style={styles.pressableContainer}
+        style={({ pressed }) => [
+          styles.pressableContainer,
+          pressed && styles.pressedStyle,
+        ]}
         android_ripple={{ color: "pink" }}
       >
         <Text style={styles.textStyle}>{goal.text}</Text>
@@ -22,7 +25,6 @@ export default function GoalItem({ goal, deleteHandler }) {
             deleteHandler(goal.id);
           }}
         ></Button>
-        {/* <Button title="i" onPress={handlePressGoal}></Button> */}
       </Pressable>
     </View>
   );
@@ -37,6 +39,9 @@ const styles = StyleSheet.create({
   pressableContainer: {
     flexDirection: "row",
     padding: 5,
+  },
+  pressedStyle: {
+    opacity: 0.5,
   },
   textStyle: {
     color: "red",
