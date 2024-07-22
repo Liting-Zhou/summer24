@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Pressable } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import PressableButton from "./PressableButton";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function GoalItem({ goal, deleteHandler }) {
   const navigation = useNavigation();
@@ -10,14 +12,25 @@ export default function GoalItem({ goal, deleteHandler }) {
 
   return (
     <View style={styles.textContainer}>
-      <Text style={styles.textStyle}>{goal.text}</Text>
-      <Button
-        title="X"
-        onPress={() => {
-          deleteHandler(goal.id);
-        }}
-      ></Button>
-      <Button title="i" onPress={handlePressGoal}></Button>
+      <Pressable
+        onPress={handlePressGoal}
+        style={({ pressed }) => [
+          styles.pressableContainer,
+          pressed && styles.pressedStyle,
+        ]}
+        android_ripple={{ color: "pink" }}
+      >
+        <Text style={styles.textStyle}>{goal.text}</Text>
+        <PressableButton
+          componentStyle={styles.buttonStyle}
+          pressedFunction={() => {
+            deleteHandler(goal.id);
+          }}
+        >
+          {/* <Text>X</Text> */}
+          <AntDesign name="delete" size={20} color="black" />
+        </PressableButton>
+      </Pressable>
     </View>
   );
 }
@@ -27,10 +40,20 @@ const styles = StyleSheet.create({
     backgroundColor: "lightyellow",
     borderRadius: 5,
     marginVertical: 5,
+  },
+  pressableContainer: {
     flexDirection: "row",
+    padding: 5,
+    alignItems: "center",
+  },
+  pressedStyle: {
+    opacity: 0.5,
   },
   textStyle: {
     color: "red",
     padding: 10,
+  },
+  buttonStyle: {
+    // backgroundColor: "gray",
   },
 });
