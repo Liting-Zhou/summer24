@@ -13,8 +13,10 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { app } from "../firebase/firebaseSetup";
 
 export default function Home({ navigation }) {
+  console.log(app);
   const appName = "Summer 2024 class";
   // default goals for testing
   const [goals, setGoals] = useState([
