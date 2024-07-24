@@ -28,7 +28,7 @@ export default function Home({ navigation }) {
       let newGoals = [];
       if (!querySnapshot.empty) {
         querySnapshot.forEach((docSnapShot) => {
-          newGoals.push({ ...docSnapShot.data().data, id: docSnapShot.id });
+          newGoals.push({ ...docSnapShot.data(), id: docSnapShot.id });
         });
       }
       setGoals(newGoals);
