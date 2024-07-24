@@ -39,7 +39,7 @@ export default function Home({ navigation }) {
   }, []);
 
   const handleInputData = (data) => {
-    //define a new object {text:.., id:..}
+    // define a new object {text:.., id:..}
     const newGoal = { text: data };
     // call writeToDB function from firebaseHelper.js and pass the new goal
     writeToDB(newGoal, "goals");

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Button } from "react-native";
 import React, { useState, useLayoutEffect } from "react";
+import { addWarningToGoal } from "../firebase/firebaseHelper";
 
 export default function GoalDetails({ navigation, route }) {
   //if route.params is undefined, set goalObj to a default object
@@ -18,6 +19,7 @@ export default function GoalDetails({ navigation, route }) {
           onPress={() => {
             setTextColor("red");
             setHeaderTitle("Warning!");
+            addWarningToGoal(goalObj.id, "goals");
           }}
         />
       ),
