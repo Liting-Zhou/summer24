@@ -24,19 +24,22 @@ export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    onSnapshot(collection(db, "goals"), (querySnapshot) => {
+    const unsubscribe = onSnapshot(collection(db, "goals"), (querySnapshot) => {
       let newGoals = [];
       if (!querySnapshot.empty) {
         querySnapshot.forEach((docSnapShot) => {
-          newGoals.push({ ...docSnapShot.data().data, id: docSnapShot.id });
+          newGoals.push({ ...docSnapShot.data(), id: docSnapShot.id });
         });
       }
       setGoals(newGoals);
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const handleInputData = (data) => {
-    //define a new object {text:.., id:..}
+    // define a new object {text:.., id:..}
     const newGoal = { text: data };
     // call writeToDB function from firebaseHelper.js and pass the new goal
     writeToDB(newGoal, "goals");
