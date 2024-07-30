@@ -4,8 +4,10 @@ import { StyleSheet, Text, Button } from "react-native";
 import React, { useState } from "react";
 import Home from "./components/Home";
 import GoalDetails from "./components/GoalDetails";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +25,20 @@ export default function App() {
           },
         }}
       >
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{
+            title: "Sign Up",
+          }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            title: "Log in",
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={Home}
