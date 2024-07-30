@@ -16,8 +16,6 @@ export default function Login() {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        // console.log(user);
         navigation.replace("Home");
       })
       .catch((error) => {
@@ -34,11 +32,7 @@ export default function Login() {
     <View>
       <View style={styles.formItemContainer}>
         <CustomText>Email Address</CustomText>
-        <NewInput
-          value={email}
-          onChangeText={setEmail}
-          //   style={styles.description}
-        />
+        <NewInput value={email} onChangeText={setEmail} />
       </View>
       <View style={styles.formItemContainer}>
         <CustomText>Password</CustomText>
@@ -46,21 +40,18 @@ export default function Login() {
       </View>
 
       <PressableButton pressedFunction={handleLogin}>
-        <Text>Log in</Text>
+        <Text style={{ color: "blue" }}>Log in</Text>
       </PressableButton>
 
       <PressableButton pressedFunction={handleCreateAccount}>
-        <Text>New User? Create an account</Text>
+        <Text style={{ color: "blue" }}>New User? Create an account</Text>
       </PressableButton>
     </View>
-    // </View>
-    // </View>
   );
 }
 
 const styles = StyleSheet.create({
   formItemContainer: {
-    // flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 10,

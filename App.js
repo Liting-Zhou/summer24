@@ -42,8 +42,16 @@ export default function App() {
 
   const AuthStack = (
     <>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ title: "Login" }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{ title: "Sign up" }}
+      />
     </>
   );
   const AppStack = (
