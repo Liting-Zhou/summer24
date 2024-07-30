@@ -6,8 +6,9 @@ import Home from "./components/Home";
 import GoalDetails from "./components/GoalDetails";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebaseSetup";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -28,6 +29,16 @@ export default function App() {
       }
     });
   }, []);
+
+  const handleSignout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Signed out");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const AuthStack = (
     <>
@@ -56,7 +67,19 @@ export default function App() {
         }}
       />
       <Stack.Screen name="Details" component={GoalDetails} />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerRight: () => {
+            return (
+              <PressableButton pressedFunction={handleSignout}>
+                <AntDesign name="logout" size={24} color="black" />
+              </PressableButton>
+            );
+          },
+        }}
+      />
     </>
   );
 
