@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebaseSetup";
 
 import NewInput from "./NewInput";
 import CustomText from "./CustomText";
@@ -12,8 +14,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = () => {
-    console.log("Login");
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        // console.log(user);
+        navigation.replace("Home");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
   };
+
   const handleCreateAccount = () => {
     navigation.replace("Signup");
   };

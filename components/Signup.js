@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebaseSetup";
 
 import NewInput from "./NewInput";
 import CustomText from "./CustomText";
@@ -15,7 +17,16 @@ export default function Signup() {
     navigation.replace("Login");
   };
   const handleRegister = () => {
-    console.log("Register");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
   };
   return (
     <View>
