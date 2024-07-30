@@ -12,6 +12,7 @@ import { auth } from "./firebase/firebaseSetup";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Profile from "./components/Profile";
+import PressableButton from "./components/PressableButton";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,8 +37,26 @@ export default function App() {
   );
   const AppStack = (
     <>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={({ navigation }) => {
+          return {
+            title: "Goals",
+            headerRight: () => {
+              return (
+                <PressableButton
+                  pressedFunction={() => navigation.navigate("Profile")}
+                >
+                  <Text>Profile</Text>
+                </PressableButton>
+              );
+            },
+          };
+        }}
+      />
       <Stack.Screen name="Details" component={GoalDetails} />
+      <Stack.Screen name="Profile" component={Profile} />
     </>
   );
 
