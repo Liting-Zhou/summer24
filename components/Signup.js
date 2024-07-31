@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebaseSetup";
 
-import NewInput from "./NewInput";
+import SimpleInput from "./SimpleInput";
 import CustomText from "./CustomText";
 import PressableButton from "./PressableButton";
 
@@ -32,7 +32,7 @@ export default function Signup() {
     <View>
       <View style={styles.formItemContainer}>
         <CustomText>Email Address</CustomText>
-        <NewInput
+        <SimpleInput
           value={email}
           onChangeText={setEmail}
           //   style={styles.description}
@@ -40,12 +40,12 @@ export default function Signup() {
       </View>
       <View style={styles.formItemContainer}>
         <CustomText>Password</CustomText>
-        <NewInput value={password} onChangeText={setPassword} />
+        <SimpleInput value={password} onChangeText={setPassword} />
       </View>
 
       <View style={styles.formItemContainer}>
         <CustomText>Confirm password</CustomText>
-        <NewInput value={password} onChangeText={setPassword} />
+        <SimpleInput value={password} onChangeText={setPassword} />
       </View>
       <PressableButton pressedFunction={handleRegister}>
         <Text>Register</Text>

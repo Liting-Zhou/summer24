@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 // import { ThemeContext } from "../ThemeContext";
 // import colors from "../colors";
 
-export default function NewInput({
+export default function SimpleInput({
   onChangeText,
   value,
   editable,
