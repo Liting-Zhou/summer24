@@ -4,7 +4,6 @@ import { auth } from "../firebase/firebaseSetup";
 
 export default function Profile() {
   const user = auth.currentUser;
-  //   console.log(auth);
 
   return (
     <View style={styles.container}>
