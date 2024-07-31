@@ -9,6 +9,7 @@ export default function SimpleInput({
   editable,
   pointerEvents,
   style,
+  placeholder,
 }) {
   return (
     <TextInput
@@ -17,6 +18,7 @@ export default function SimpleInput({
       onChangeText={onChangeText}
       editable={editable}
       pointerEvents={pointerEvents}
+      placeholder={placeholder}
     />
   );
 }
@@ -27,6 +29,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    width: "90%",
+    // width: "90%",
   },
 });

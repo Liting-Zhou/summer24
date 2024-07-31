@@ -13,34 +13,37 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        navigation.replace("Home");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigation.replace("Home");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleCreateAccount = () => {
     navigation.replace("Signup");
   };
+
   return (
-    <View>
-      <View style={styles.formItemContainer}>
-        <CustomText>Email Address</CustomText>
-        <SimpleInput value={email} onChangeText={setEmail} />
-      </View>
-      <View style={styles.formItemContainer}>
-        <CustomText>Password</CustomText>
-        <SimpleInput value={password} onChangeText={setPassword} />
-      </View>
+    <View style={styles.container}>
+      <CustomText>Email Address</CustomText>
+      <SimpleInput
+        value={email}
+        onChangeText={setEmail}
+        placeholder={"Enter your email"}
+      />
+
+      <CustomText>Password</CustomText>
+      <SimpleInput
+        value={password}
+        onChangeText={setPassword}
+        placeholder={"Enter password"}
+      />
 
       <PressableButton pressedFunction={handleLogin}>
-        <Text style={{ color: "blue" }}>Log in</Text>
+        <Text style={{ color: "blue" }}>Log In</Text>
       </PressableButton>
 
       <PressableButton pressedFunction={handleCreateAccount}>
@@ -51,15 +54,9 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-  formItemContainer: {
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    marginVertical: 20,
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
   },
 });
