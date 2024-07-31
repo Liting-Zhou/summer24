@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   defaultStyle: {
-    // backgroundColor: "lightblue",
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
