@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -13,15 +13,17 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigation.replace("Home");
     } catch (e) {
-      console.log(e);
+      Alert.alert("Error", e.message);
     }
   };
 
+  //go to signup page
   const handleCreateAccount = () => {
     navigation.replace("Signup");
   };
