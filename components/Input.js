@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
+import ImageManager from "./ImageManager";
 
 export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
   const [text, setText] = useState("");
@@ -49,6 +50,7 @@ export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
             style={styles.textInputStyle}
           />
           {isBlurred && <Text>Thank you</Text>}
+          <ImageManager />
           <View style={styles.buttonStyle}>
             <Button title="Cancel" onPress={handleCancel} />
             <Button
