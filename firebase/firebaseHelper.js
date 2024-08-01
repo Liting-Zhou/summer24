@@ -28,14 +28,8 @@ export async function deleteFromDB(id, collectionName) {
 }
 
 export async function readAllDocs(collectionName) {
-  console.log("read all docs", auth.currentUser.uid);
   try {
-    const querySnapshot = await getDocs(
-      query(
-        collection(db, collectionName),
-        where("owner", "==", auth.currentUser.uid)
-      )
-    );
+    const querySnapshot = await getDocs(collection(db, collectionName));
     let newArray = [];
     if (!querySnapshot.empty) {
       querySnapshot.forEach((doc) => {
