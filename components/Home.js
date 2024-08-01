@@ -49,7 +49,12 @@ export default function Home({ navigation }) {
 
   const handleInputData = (data) => {
     // define a new object {text:.., id:..}
-    const newGoal = { text: data, owner: auth.currentUser.uid };
+    console.log("Home.js 52 data", data);
+    const newGoal = {
+      text: data.text,
+      image: data.imageUri,
+      owner: auth.currentUser.uid,
+    };
     // call writeToDB function from firebaseHelper.js and pass the new goal
     writeToDB(newGoal, "goals");
     setModalVisible(false);

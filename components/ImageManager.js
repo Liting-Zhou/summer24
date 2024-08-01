@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import PressableButton from "./PressableButton";
 
-export default function ImageManager() {
+export default function ImageManager({ imageUriHandler }) {
   const [response, requestPermission] = ImagePicker.useCameraPermissions();
   const [imageUri, setImageUri] = useState("");
 
@@ -29,8 +29,10 @@ export default function ImageManager() {
       const result = await ImagePicker.launchCameraAsync({
         allowEditing: true,
       });
-      console.log(result);
-      setImageUri(result.assets[0].uri);
+      console.log("ImageManager.js 32, result after taking a photo:", result);
+      const uri = result.assets[0].uri;
+      setImageUri(uri);
+      imageUriHandler(uri);
     } catch (e) {
       console.log("take image", e);
     }
