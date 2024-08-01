@@ -8,7 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "./firebaseSetup";
+import { db, auth } from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
   // console.log("write to db, collectionName", collectionName);
@@ -28,6 +28,7 @@ export async function deleteFromDB(id, collectionName) {
 }
 
 export async function readAllDocs(collectionName) {
+  console.log("read all docs", auth.currentUser.uid);
   try {
     const querySnapshot = await getDocs(
       query(
