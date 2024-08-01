@@ -1,10 +1,11 @@
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Alert, Pressable, StyleSheet, Text, View, Image } from "react-native";
+import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import PressableButton from "./PressableButton";
 
 export default function ImageManager() {
   const [response, requestPermission] = ImagePicker.useCameraPermissions();
+  const [imageUri, setImageUri] = useState("");
 
   const verifyPermissions = async () => {
     if (response.granted) {
@@ -29,6 +30,7 @@ export default function ImageManager() {
         allowEditing: true,
       });
       console.log(result);
+      setImageUri(result.assets[0].uri);
     } catch (e) {
       console.log("take image", e);
     }
@@ -38,8 +40,14 @@ export default function ImageManager() {
       <PressableButton pressedFunction={takeImageHandler}>
         <Text>Take a photo</Text>
       </PressableButton>
+      {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    width: 200,
+    height: 200,
+  },
+});
