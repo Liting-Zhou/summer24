@@ -13,9 +13,9 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { db } from "../firebase/firebaseSetup";
+import { auth, db } from "../firebase/firebaseSetup";
 import { writeToDB, deleteFromDB } from "../firebase/firebaseHelper";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, query, where } from "firebase/firestore";
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
@@ -24,15 +24,24 @@ export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "goals"), (querySnapshot) => {
-      let newGoals = [];
-      if (!querySnapshot.empty) {
-        querySnapshot.forEach((docSnapShot) => {
-          newGoals.push({ ...docSnapShot.data(), id: docSnapShot.id });
-        });
+    const unsubscribe = onSnapshot(
+      query(
+        collection(db, "goals"),
+        where("owner", "==", auth.currentUser.uid)
+      ),
+      (querySnapshot) => {
+        let newGoals = [];
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((docSnapShot) => {
+            newGoals.push({ ...docSnapShot.data(), id: docSnapShot.id });
+          });
+        }
+        setGoals(newGoals);
+      },
+      (e) => {
+        console.log("error", e);
       }
-      setGoals(newGoals);
-    });
+    );
     return () => {
       unsubscribe();
     };
@@ -40,7 +49,7 @@ export default function Home({ navigation }) {
 
   const handleInputData = (data) => {
     // define a new object {text:.., id:..}
-    const newGoal = { text: data };
+    const newGoal = { text: data, owner: auth.currentUser.uid };
     // call writeToDB function from firebaseHelper.js and pass the new goal
     writeToDB(newGoal, "goals");
     setModalVisible(false);
