@@ -10,7 +10,7 @@ export default function GoalUsers({ goalID }) {
         //before checking the data,check if there is data
         const dataFromDB = await readAllDocs(`goals/${goalID}/users`);
         // console.log("dataFromDB", dataFromDB);
-        if (dataFromDB.length) {
+        if (dataFromDB) {
           setUsers(dataFromDB);
           return;
         }

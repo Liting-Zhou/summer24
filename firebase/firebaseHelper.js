@@ -36,9 +36,11 @@ export async function readAllDocs(collectionName) {
       )
     );
     let newArray = [];
-    querySnapshot.forEach((doc) => {
-      newArray.push(doc.data());
-    });
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        newArray.push(doc.data());
+      });
+    }
     return newArray;
   } catch (e) {
     console.log("read all from db", e);
