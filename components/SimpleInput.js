@@ -3,12 +3,13 @@ import React, { useContext } from "react";
 // import { ThemeContext } from "../ThemeContext";
 // import colors from "../colors";
 
-export default function NewInput({
+export default function SimpleInput({
   onChangeText,
   value,
   editable,
   pointerEvents,
   style,
+  placeholder,
 }) {
   return (
     <TextInput
@@ -17,6 +18,7 @@ export default function NewInput({
       onChangeText={onChangeText}
       editable={editable}
       pointerEvents={pointerEvents}
+      placeholder={placeholder}
     />
   );
 }
@@ -27,6 +29,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    width: "90%",
+    // width: "90%",
   },
 });

@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebaseSetup";
 
-import NewInput from "./NewInput";
+import SimpleInput from "./SimpleInput";
 import CustomText from "./CustomText";
 import PressableButton from "./PressableButton";
 
@@ -13,64 +13,59 @@ export default function Signup() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  //go to login page
   const handleLogin = () => {
     navigation.replace("Login");
   };
-  const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
-  };
-  return (
-    <View>
-      <View style={styles.formItemContainer}>
-        <CustomText>Email Address</CustomText>
-        <NewInput
-          value={email}
-          onChangeText={setEmail}
-          //   style={styles.description}
-        />
-      </View>
-      <View style={styles.formItemContainer}>
-        <CustomText>Password</CustomText>
-        <NewInput value={password} onChangeText={setPassword} />
-      </View>
 
-      <View style={styles.formItemContainer}>
-        <CustomText>Confirm password</CustomText>
-        <NewInput value={password} onChangeText={setPassword} />
-      </View>
+  const handleRegister = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigation.replace("Home");
+    } catch (e) {
+      Alert.alert("Error", e.message);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <CustomText>Email Address</CustomText>
+      <SimpleInput
+        value={email}
+        onChangeText={setEmail}
+        placeholder={"Enter your email"}
+      />
+
+      <CustomText>Password</CustomText>
+      <SimpleInput
+        value={password}
+        onChangeText={setPassword}
+        placeholder={"Enter password"}
+      />
+
+      <CustomText>Confirm password</CustomText>
+      <SimpleInput
+        value={password}
+        onChangeText={setPassword}
+        placeholder={"Confirm password"}
+      />
+
       <PressableButton pressedFunction={handleRegister}>
-        <Text>Register</Text>
+        <Text style={{ color: "blue" }}>Register</Text>
       </PressableButton>
 
       <PressableButton pressedFunction={handleLogin}>
-        <Text>Already registered? Login</Text>
+        <Text style={{ color: "blue" }}>Already registered? Login</Text>
       </PressableButton>
     </View>
-    // </View>
-    // </View>
   );
 }
 
 const styles = StyleSheet.create({
-  formItemContainer: {
-    // flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    marginVertical: 20,
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
   },
 });
