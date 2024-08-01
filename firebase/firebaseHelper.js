@@ -27,7 +27,12 @@ export async function deleteFromDB(id, collectionName) {
 
 export async function readAllDocs(collectionName) {
   try {
-    const querySnapshot = await getDocs(collection(db, collectionName));
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, collectionName),
+        where("owner", "==", auth.currentUser.uid)
+      )
+    );
     let newArray = [];
     querySnapshot.forEach((doc) => {
       newArray.push(doc.data());
