@@ -8,19 +8,28 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
+import ImageManager from "./ImageManager";
 
 export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
   const [text, setText] = useState("");
   const [isBlurred, setIsBlurred] = useState(false);
+  const [imageUri, setImageUri] = useState("");
 
   const handleConfirm = () => {
-    inputHandler(text);
+    // send the text and image to the parent component
+    inputHandler({ text, imageUri });
     setText("");
+    setImageUri("");
   };
 
   const handleCancel = () => {
     cancelHandler();
     setText("");
+  };
+
+  const imageUriHandler = (uri) => {
+    // console.log("uri", uri);
+    setImageUri(uri);
   };
 
   return (
@@ -49,6 +58,7 @@ export default function Input({ inputHandler, cancelHandler, isModalVisible }) {
             style={styles.textInputStyle}
           />
           {isBlurred && <Text>Thank you</Text>}
+          <ImageManager imageUriHandler={imageUriHandler} />
           <View style={styles.buttonStyle}>
             <Button title="Cancel" onPress={handleCancel} />
             <Button

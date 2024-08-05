@@ -5,8 +5,10 @@ import {
   deleteDoc,
   updateDoc,
   getDocs,
+  query,
+  where,
 } from "firebase/firestore";
-import { db } from "./firebaseSetup";
+import { db, auth } from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
   // console.log("write to db, collectionName", collectionName);
@@ -29,9 +31,11 @@ export async function readAllDocs(collectionName) {
   try {
     const querySnapshot = await getDocs(collection(db, collectionName));
     let newArray = [];
-    querySnapshot.forEach((doc) => {
-      newArray.push(doc.data());
-    });
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        newArray.push(doc.data());
+      });
+    }
     return newArray;
   } catch (e) {
     console.log("read all from db", e);
