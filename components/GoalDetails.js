@@ -60,10 +60,19 @@ export default function GoalDetails({ navigation, route }) {
           navigation.push("Details");
         }}
       ></Button>
-      <Image source={{ uri: imageURL }} />
+      {imageURL ? (
+        <Image source={{ uri: imageURL }} style={styles.image} />
+      ) : (
+        <Text>No image available</Text>
+      )}
       <GoalUsers goalID={route.params.goalObj.id} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    width: 200,
+    height: 200,
+  },
+});
