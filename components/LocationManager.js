@@ -1,10 +1,20 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  Dimensions,
+} from "react-native";
 import * as Location from "expo-location";
 import React, { useState } from "react";
-import PressableButton from "./PressableButton";
+import { mapsApiKey } from "@env";
+
+const windowWidth = Dimensions.get("window").width;
 
 export default function LocationManager() {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [response, requestPermission] = Location.useForegroundPermissions();
   const verifyPermission = async () => {
     // console.log("LocationManager.js 10, response: ", response);
@@ -40,11 +50,20 @@ export default function LocationManager() {
 
   return (
     <View>
-      <PressableButton pressedFunction={locateUserHandler}>
-        <Text>Use Location</Text>
-      </PressableButton>
+      <Button onPress={locateUserHandler} title="Use Location"></Button>
+      <Image
+        source={{
+          uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
+        }}
+        style={styles.map}
+      ></Image>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  map: {
+    width: windowWidth,
+    height: 200,
+  },
+});
