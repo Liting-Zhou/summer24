@@ -16,6 +16,8 @@ import PressableButton from "./PressableButton";
 import { auth, db } from "../firebase/firebaseSetup";
 import { writeToDB, deleteFromDB } from "../firebase/firebaseHelper";
 import { onSnapshot, collection, query, where } from "firebase/firestore";
+import { storage } from "../firebase/firebaseSetup";
+import { ref, uploadBytesResumable } from "firebase/storage";
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
@@ -47,14 +49,39 @@ export default function Home({ navigation }) {
     };
   }, []);
 
-  const handleInputData = (data) => {
+  const retrieveUploadImage = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      if (!response.ok) {
+        throw new Error("upload image failed");
+      }
+
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      console.log("Home.js 64, uploadResult", uploadResult.metadata.fullPath);
+      return uploadResult.metadata.fullPath;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleInputData = async (data) => {
     // define a new object {text:.., id:..}
-    console.log("Home.js 52 data", data);
+    // console.log("Home.js 72 data", data);
+
+    let imageUri = "";
+    if (data.imageUri) {
+      imageUri = await retrieveUploadImage(data.imageUri);
+    }
+
     const newGoal = {
       text: data.text,
-      image: data.imageUri,
+      image: imageUri,
       owner: auth.currentUser.uid,
     };
+    console.log("Home.js 84 newGoal", newGoal);
     // call writeToDB function from firebaseHelper.js and pass the new goal
     writeToDB(newGoal, "goals");
     setModalVisible(false);
