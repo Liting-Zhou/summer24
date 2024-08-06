@@ -60,7 +60,7 @@ export default function Home({ navigation }) {
       const imageName = uri.substring(uri.lastIndexOf("/") + 1);
       const imageRef = ref(storage, `images/${imageName}`);
       const uploadResult = await uploadBytesResumable(imageRef, blob);
-      console.log("Home.js 64, uploadResult", uploadResult.metadata.fullPath);
+      console.log("Home.js 63, uploadResult", uploadResult.metadata.fullPath);
       return uploadResult.metadata.fullPath;
     } catch (e) {
       console.log(e);
@@ -68,9 +68,6 @@ export default function Home({ navigation }) {
   };
 
   const handleInputData = async (data) => {
-    // define a new object {text:.., id:..}
-    // console.log("Home.js 72 data", data);
-
     let imageUri = "";
     if (data.imageUri) {
       imageUri = await retrieveUploadImage(data.imageUri);

@@ -1,15 +1,32 @@
-import { StyleSheet, Text, View, Button } from "react-native";
-import React, { useState, useLayoutEffect } from "react";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { addWarningToGoal } from "../firebase/firebaseHelper";
 import GoalUsers from "./GoalUsers";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../firebase/firebaseSetup";
 
 export default function GoalDetails({ navigation, route }) {
   //if route.params is undefined, set goalObj to a default object
   const { goalObj } = route.params
     ? route.params
-    : { goalObj: { text: "Details", id: 0 } };
+    : { goalObj: { text: "Details", image: "", owner: "" } };
   const [textColor, setTextColor] = useState("black");
   const [headerTitle, setHeaderTitle] = useState(goalObj.text);
+  const [imageURL, setImageURL] = useState("");
+  console.log("GoalDetails.js 16, goalObj", goalObj);
+
+  useEffect(() => {
+    const getImageURL = async () => {
+      if (route.params) {
+        const url = await getDownloadURL(
+          ref(storage, route.params.goalObj.image)
+        );
+        console.log("GoalDetails.js 24, url", url);
+        setImageURL(url);
+      }
+    };
+    getImageURL();
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -43,6 +60,7 @@ export default function GoalDetails({ navigation, route }) {
           navigation.push("Details");
         }}
       ></Button>
+      <Image source={{ uri: imageURL }} />
       <GoalUsers goalID={route.params.goalObj.id} />
     </View>
   );
