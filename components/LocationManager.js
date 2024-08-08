@@ -9,11 +9,14 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { mapsApiKey } from "@env";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function LocationManager() {
+  const navigation = useNavigation();
+
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [response, requestPermission] = Location.useForegroundPermissions();
   const verifyPermission = async () => {
@@ -48,9 +51,17 @@ export default function LocationManager() {
     }
   };
 
+  const chooseLocationHandler = () => {
+    navigation.navigate("Map");
+  };
+
   return (
     <View>
-      <Button onPress={locateUserHandler} title="Use Location"></Button>
+      <Button onPress={locateUserHandler} title="Find my Location"></Button>
+      <Button
+        onPress={chooseLocationHandler}
+        title="Let me choose my Location"
+      ></Button>
       <Image
         source={{
           uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
