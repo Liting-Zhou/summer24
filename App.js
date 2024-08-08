@@ -13,6 +13,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Profile from "./components/Profile";
+import MapComponent from "./components/MapComponent";
 import PressableButton from "./components/PressableButton";
 
 const Stack = createNativeStackNavigator();
@@ -87,6 +88,7 @@ export default function App() {
           },
         }}
       />
+      <Stack.Screen name="Map" component={MapComponent} />
     </>
   );
 
