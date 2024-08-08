@@ -11,10 +11,14 @@ import * as Location from "expo-location";
 import React, { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { mapsApiKey } from "@env";
+import { auth } from "../firebase/firebaseSetup";
+import { writeWithIdToDB, getADoc } from "../firebase/firebaseHelper";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function LocationManager() {
+  const user = auth.currentUser;
+
   //receive selected location from route params
   const navigation = useNavigation();
   const route = useRoute();
@@ -28,6 +32,7 @@ export default function LocationManager() {
       setLocation(route.params.selectedLocation);
     }
   }, [route.params]);
+
   const verifyPermission = async () => {
     // console.log("LocationManager.js 32, response: ", response);
     if (response.granted) {
@@ -36,6 +41,24 @@ export default function LocationManager() {
     const permissionResponse = await requestPermission();
     return permissionResponse.granted;
   };
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userData = await getADoc(user.uid, "users");
+        // console.log("LocationManager.js 48, getUserData: ", userData);
+        if (userData) {
+          setLocation({
+            latitude: userData.latitude,
+            longitude: userData.longitude,
+          });
+        }
+      } catch (e) {
+        console.error("Error getting user data", e);
+      }
+    };
+    getUserData();
+  }, []);
 
   const locateUserHandler = async () => {
     try {
@@ -64,6 +87,13 @@ export default function LocationManager() {
     navigation.navigate("Map");
   };
 
+  const saveUserLocation = () => {
+    console.log("saving user location");
+    if (user) {
+      writeWithIdToDB(location, user.uid, "users");
+    }
+  };
+
   return (
     <View>
       <Button onPress={locateUserHandler} title="Find my Location"></Button>
@@ -77,6 +107,7 @@ export default function LocationManager() {
         }}
         style={styles.map}
       ></Image>
+      <Button title="Save location" onPress={saveUserLocation}></Button>
     </View>
   );
 }
