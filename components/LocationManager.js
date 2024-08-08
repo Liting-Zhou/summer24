@@ -8,19 +8,28 @@ import {
   Dimensions,
 } from "react-native";
 import * as Location from "expo-location";
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { mapsApiKey } from "@env";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function LocationManager() {
+  //receive selected location from route params
   const navigation = useNavigation();
+  const route = useRoute();
+  // console.log("LocationManager.js 21, route.params: ", route.params);
 
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [response, requestPermission] = Location.useForegroundPermissions();
+
+  useEffect(() => {
+    if (route.params) {
+      setLocation(route.params.selectedLocation);
+    }
+  }, [route.params]);
   const verifyPermission = async () => {
-    // console.log("LocationManager.js 10, response: ", response);
+    // console.log("LocationManager.js 32, response: ", response);
     if (response.granted) {
       return true;
     }

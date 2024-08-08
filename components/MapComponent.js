@@ -38,6 +38,7 @@ export default function MapComponent({ navigation }) {
             selectedLocation,
           });
         }}
+        disabled={!selectedLocation}
       ></Button>
     </View>
   );
