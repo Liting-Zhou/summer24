@@ -29,6 +29,7 @@ Notifications.setNotificationHandler({
 export default function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
+  // listen for notifications received event
   useEffect(() => {
     const subscription = Notifications.addNotificationReceivedListener(
       (notification) => {
@@ -38,6 +39,7 @@ export default function App() {
     return () => subscription.remove();
   }, []);
 
+  // listen for user tapping notification
   useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener(
       (response) => {
