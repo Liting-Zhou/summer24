@@ -9,14 +9,15 @@ import {
   FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { auth, db } from "../firebase/firebaseSetup";
+
+import { auth, db, storage } from "../firebase/firebaseSetup";
 import { writeToDB, deleteFromDB } from "../firebase/firebaseHelper";
 import { onSnapshot, collection, query, where } from "firebase/firestore";
-import { storage } from "../firebase/firebaseSetup";
 import { ref, uploadBytesResumable } from "firebase/storage";
 
 export default function Home({ navigation }) {
