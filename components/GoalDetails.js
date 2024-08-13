@@ -65,7 +65,7 @@ export default function GoalDetails({ navigation, route }) {
       ) : (
         <Text>No image available</Text>
       )}
-      <GoalUsers goalID={route.params.goalObj.id} />
+      {route.params && <GoalUsers goalID={route.params.goalObj.id} />}
     </View>
   );
 }

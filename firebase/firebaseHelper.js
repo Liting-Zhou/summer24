@@ -1,12 +1,28 @@
 import {
   addDoc,
+  setDoc,
   collection,
   doc,
   deleteDoc,
   updateDoc,
   getDocs,
+  getDoc,
 } from "firebase/firestore";
 import { db, auth } from "./firebaseSetup";
+
+export async function getADoc(id, collectionName) {
+  try {
+    const docRef = doc(db, collectionName, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log("read a doc from db", e);
+  }
+}
 
 export async function writeToDB(data, collectionName) {
   // console.log("write to db, collectionName", collectionName);
@@ -14,6 +30,14 @@ export async function writeToDB(data, collectionName) {
     await addDoc(collection(db, collectionName), data);
   } catch (e) {
     console.log("write to db", e);
+  }
+}
+
+export async function writeWithIdToDB(data, id, collectionName) {
+  try {
+    await setDoc(doc(db, collectionName, id), data, { merge: true });
+  } catch (e) {
+    console.log("write with id to db", e);
   }
 }
 
