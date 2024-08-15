@@ -7,23 +7,71 @@ import {
   Button,
   SafeAreaView,
   FlatList,
+  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { auth, db } from "../firebase/firebaseSetup";
+
+import { auth, db, storage } from "../firebase/firebaseSetup";
 import { writeToDB, deleteFromDB } from "../firebase/firebaseHelper";
 import { onSnapshot, collection, query, where } from "firebase/firestore";
-import { storage } from "../firebase/firebaseSetup";
 import { ref, uploadBytesResumable } from "firebase/storage";
+
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
+import { verifyPermission } from "./NotificationManager";
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
   // default goals for testing
   const [goals, setGoals] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    async function getToken() {
+      try {
+        const hasPermission = await verifyPermission();
+        console.log("Home.js 38, hasPermission", hasPermission);
+        if (!hasPermission) {
+          return;
+        }
+
+        if (Platform.OS === "android") {
+          await Notifications.setNotificationChannelAsync("default", {
+            name: "default",
+            importance: Notifications.AndroidImportance.MAX,
+          });
+        }
+
+        const token = await Notifications.getExpoPushTokenAsync({
+          projectId: Constants.expoConfig.extra.eas.projectId,
+        });
+        console.log("Home.js 46, token", token);
+
+        // const expoPushToken = await Notifications.getExpoPushTokenAsync({
+        //   projectId: "your-project-id",
+        // });
+
+        // await fetch("https://example.com/", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({
+        //     userId,
+        //     expoPushToken,
+        //   }),
+        // });
+      } catch (e) {
+        console.log("Error getting token", e);
+      }
+    }
+    getToken();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(

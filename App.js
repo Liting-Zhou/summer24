@@ -1,25 +1,59 @@
 // rnfs to generate a template
-import { StatusBar } from "expo-status-bar";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, Linking } from "react-native";
 import React, { useEffect, useState } from "react";
-import Home from "./components/Home";
-import GoalDetails from "./components/GoalDetails";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import * as Notifications from "expo-notifications";
+
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebaseSetup";
-import AntDesign from "@expo/vector-icons/AntDesign";
 
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Profile from "./components/Profile";
 import MapComponent from "./components/MapComponent";
 import PressableButton from "./components/PressableButton";
+import GoalDetails from "./components/GoalDetails";
 
 const Stack = createNativeStackNavigator();
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+
+  // listen for notifications received event
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        // console.log("App.js 35, notification", notification);
+      }
+    );
+    return () => subscription.remove();
+  }, []);
+
+  // listen for user tapping notification
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        //navigate to the url
+        const url = response.notification.request.content.data.url;
+        if (url) {
+          Linking.openURL(url).catch((err) =>
+            console.error("Failed to open URL:", err)
+          );
+        }
+      }
+    );
+    return () => subscription.remove();
+  }, []);
 
   //listen for user state changes
   useEffect(() => {
