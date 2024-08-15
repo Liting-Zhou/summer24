@@ -39,7 +39,7 @@ export default function App() {
     return () => subscription.remove();
   }, []);
 
-  // listen for user tapping notification
+  // navigate to url when user taps notification
   useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener(
       (response) => {
