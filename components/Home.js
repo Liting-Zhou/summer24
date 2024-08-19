@@ -50,22 +50,7 @@ export default function Home({ navigation }) {
         const token = await Notifications.getExpoPushTokenAsync({
           projectId: Constants.expoConfig.extra.eas.projectId,
         });
-        console.log("Home.js 46, token", token);
-
-        // const expoPushToken = await Notifications.getExpoPushTokenAsync({
-        //   projectId: "your-project-id",
-        // });
-
-        // await fetch("https://example.com/", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     userId,
-        //     expoPushToken,
-        //   }),
-        // });
+        console.log("Home.js 53, token", token);
       } catch (e) {
         console.log("Error getting token", e);
       }
@@ -141,6 +126,20 @@ export default function Home({ navigation }) {
     deleteFromDB(deletedId, "goals");
   };
 
+  const pushNotificationHandler = async () => {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        to: "ExponentPushToken[CAr8Q0ORbIV20KdBfAte_I]",
+        title: "Push Notification",
+        body: "This is a push notification",
+      }),
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -152,6 +151,10 @@ export default function Home({ navigation }) {
         >
           <Text style={styles.buttonTextStyle}>Add a goal</Text>
         </PressableButton>
+        <Button
+          title="test push notification"
+          onPress={pushNotificationHandler}
+        ></Button>
       </View>
       <Input
         inputHandler={handleInputData}
